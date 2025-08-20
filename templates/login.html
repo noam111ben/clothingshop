@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}התחברות{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">התחברות</h2>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <form method="post" action="/login">
+      <div class="mb-3">
+        <label class="form-label">אימייל</label>
+        <input type="email" class="form-control" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">סיסמה</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">התחבר</button>
+    </form>
+
+    <p class="text-center mt-3">
+      עדיין לא רשום? <a href="/register">לחץ כאן להרשמה</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

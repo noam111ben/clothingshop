@@ -1,0 +1,12 @@
+# קבצים רגישים
+.env
+
+# תיקיות של PyCharm
+.idea/
+
+# קבצי Python זמניים
+__pycache__/
+*.pyc
+
+# תיקיות ואמצעי עבודה
+static/uploads/

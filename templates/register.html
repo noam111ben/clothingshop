@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}הרשמה{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+  <div class="card shadow-sm" style="width: 100%; max-width: 420px; border-radius: 12px;">
+    <div class="card-body p-4">
+      <h2 class="card-title text-center mb-4">הרשמה</h2>
+      <form action="/register" method="post" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">שם משתמש</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+          <div class="invalid-feedback">אנא הזן שם משתמש</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">אימייל</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+          <div class="invalid-feedback">אנא הזן כתובת אימייל תקינה</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">סיסמה</label>
+          <input type="password" class="form-control" id="password" name="password" required minlength="6">
+          <div class="invalid-feedback">אנא הזן סיסמה עם לפחות 6 תווים</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password_confirm" class="form-label">אישור סיסמה</label>
+          <input type="password" class="form-control" id="password_confirm" name="password_confirm" required minlength="6">
+          <div class="invalid-feedback">אנא אשר את הסיסמה</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 fw-semibold">הרשם</button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        יש לך כבר חשבון? <a href="/login" class="text-decoration-none">התחבר כאן</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>
+{% endblock %}

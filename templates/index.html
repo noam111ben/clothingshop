@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}דף הבית - חנות בגדים{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">מוצרים חמים 🔥</h2>
+
+<div class="row">
+  {% for product in hot_products %}
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <img src="{{ product.image_url or '/static/img/default.jpg' }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">₪{{ product.price }}</p>
+          <a href="/product/{{ product.id }}" class="btn btn-outline-primary w-100">לצפייה בפריט</a>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <p class="text-center">לא קיימים כרגע מוצרים חמים.</p>
+  {% endfor %}
+</div>
+{% endblock %}
