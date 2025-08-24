@@ -4,48 +4,75 @@
 {% block content %}
 <div class="container mt-5">
   <div class="card shadow p-4">
-    <h2 class="mb-4 text-center">הוספת מוצר חדש</h2>
+    <h2 class="mb-4 text-center">➕ הוספת מוצר חדש</h2>
 
-    <form action="/add-product" method="post" enctype="multipart/form-data" onsubmit="return validateSizes()">
+    <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
 
+      <!-- שם המוצר -->
       <div class="mb-3">
         <label class="form-label">שם המוצר</label>
         <input type="text" name="name" class="form-control" required>
       </div>
 
+      <!-- תיאור -->
       <div class="mb-3">
         <label class="form-label">תיאור</label>
         <textarea name="description" class="form-control" rows="3" required></textarea>
       </div>
 
+      <!-- מחיר -->
       <div class="mb-3">
         <label class="form-label">מחיר (₪)</label>
         <input type="number" name="price" class="form-control" min="0" step="0.01" required>
       </div>
 
+      <!-- תמונה -->
       <div class="mb-3">
         <label class="form-label">תמונה</label>
-        <input type="file" name="image_file" class="form-control" accept="image/*" required>
+        <input type="file" name="image_file" class="form-control" accept=".png,.jpg,.jpeg,.gif,.webp" required>
       </div>
 
-      <!-- מידות לבגדים -->
+      <!-- קהל יעד -->
       <div class="mb-3">
-        <label class="form-label">מידת בגדים (לדוגמה: S, M, L או ריק אם לא רלוונטי)</label>
-        <input type="text" name="size_clothes" class="form-control" placeholder="מידת בגדים">
+        <label class="form-label">קהל יעד</label>
+        <select name="gender" class="form-select" required>
+          <option value="men">👔 גברים</option>
+          <option value="women">👗 נשים</option>
+          <option value="kids">🧒 ילדים</option>
+        </select>
       </div>
 
-      <!-- מידות לנעליים (טווח) -->
+      <!-- סוג פריט -->
       <div class="mb-3">
-        <label class="form-label">טווח מידות נעליים (ריק אם לא רלוונטי)</label>
+        <label class="form-label">סוג פריט</label>
+        <select name="category" class="form-select" required>
+          <option value="shirt">👕 חולצה</option>
+          <option value="pants">👖 מכנסיים</option>
+          <option value="leggings">🩳 טייאצ׳</option>
+          <option value="shoes">👟 נעליים</option>
+          <option value="hat">🧢 כובע</option>
+          <option value="accessories">🎒 אקססוריז</option>
+        </select>
+      </div>
+
+      <!-- מידת בגדים -->
+      <div class="mb-3">
+        <label class="form-label">מידת בגדים</label>
+        <input type="text" name="size_clothes" class="form-control" placeholder="למשל: S, M, L">
+      </div>
+
+      <!-- טווח מידות נעליים -->
+      <div class="mb-3">
+        <label class="form-label">טווח מידות נעליים</label>
         <div class="d-flex gap-2">
           <select name="size_shoes_min" class="form-select">
-            <option value="" selected>מינימום</option>
+            <option value="">מינימום</option>
             {% for size in range(25, 49) %}
               <option value="{{ size }}">{{ size }}</option>
             {% endfor %}
           </select>
           <select name="size_shoes_max" class="form-select">
-            <option value="" selected>מקסימום</option>
+            <option value="">מקסימום</option>
             {% for size in range(25, 49) %}
               <option value="{{ size }}">{{ size }}</option>
             {% endfor %}
@@ -53,31 +80,15 @@
         </div>
       </div>
 
+      <!-- מוצר חם -->
       <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" id="is_hot" name="is_hot">
         <label class="form-check-label" for="is_hot">מוצר חם 🔥</label>
       </div>
 
+      <!-- כפתור -->
       <button type="submit" class="btn btn-success w-100">הוסף מוצר</button>
     </form>
   </div>
 </div>
-
-<script>
-  function validateSizes() {
-    const clothesSize = document.querySelector('input[name="size_clothes"]').value.trim();
-    const shoeMin = document.querySelector('select[name="size_shoes_min"]').value;
-    const shoeMax = document.querySelector('select[name="size_shoes_max"]').value;
-
-    if (!clothesSize && (!shoeMin || !shoeMax)) {
-      alert("יש להזין לפחות מידת בגדים או טווח מידות נעליים.");
-      return false;
-    }
-    if (shoeMin && shoeMax && parseInt(shoeMin) > parseInt(shoeMax)) {
-      alert("מידת המינימום לנעליים לא יכולה להיות גדולה מהמקסימום.");
-      return false;
-    }
-    return true;
-  }
-</script>
 {% endblock %}

@@ -1,24 +1,46 @@
 {% extends "base.html" %}
-
 {% block title %}דף הבית - חנות בגדים{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">מוצרים חמים 🔥</h2>
+<div class="container py-4" dir="rtl">
 
-<div class="row">
-  {% for product in hot_products %}
-    <div class="col-md-4">
-      <div class="card mb-4">
-        <img src="{{ product.image_url or '/static/img/default.jpg' }}" class="card-img-top" alt="{{ product.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">₪{{ product.price }}</p>
-          <a href="/product/{{ product.id }}" class="btn btn-outline-primary w-100">לצפייה בפריט</a>
+  <h2 class="mb-4 text-center fw-bold text-dark">מוצרים חמים 🔥</h2>
+
+  <!-- מוצרים חמים -->
+  <div class="row g-4">
+    {% for product in hot_products %}
+      <div class="col-6 col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+          <div style="aspect-ratio:1/1;background:#f8f9fa;">
+            <img src="{{ product.image_url or '/static/img/default.jpg' }}" class="card-img-top" alt="{{ product.name }}" style="object-fit:cover;width:100%;height:100%;">
+          </div>
+          <div class="card-body text-center">
+            <h6 class="card-title text-truncate fw-semibold" title="{{ product.name }}">{{ product.name }}</h6>
+            <div class="fw-bold text-success mb-2">₪{{ '%.2f'|format(product.price) }}</div>
+            <a href="/products/{{ product.id }}" class="btn btn-outline-primary btn-sm w-100">לפרטים</a>
+          </div>
         </div>
       </div>
+    {% else %}
+      <div class="col-12">
+        <div class="alert alert-info text-center">אין כרגע מוצרים חמים להצגה.</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- קישורים מהירים לקטגוריות -->
+  <hr class="my-5">
+  <h3 class="mb-4 text-center">קטגוריות עיקריות</h3>
+  <div class="row g-4 justify-content-center">
+    <div class="col-6 col-md-3">
+      <a href="/men" class="btn btn-outline-primary w-100 py-3 rounded-3 shadow-sm">👔 בגדי גברים</a>
     </div>
-  {% else %}
-    <p class="text-center">לא קיימים כרגע מוצרים חמים.</p>
-  {% endfor %}
+    <div class="col-6 col-md-3">
+      <a href="/women" class="btn btn-outline-danger w-100 py-3 rounded-3 shadow-sm">👗 בגדי נשים</a>
+    </div>
+    <div class="col-6 col-md-3">
+      <a href="/kids" class="btn btn-outline-success w-100 py-3 rounded-3 shadow-sm">🧒 בגדי ילדים</a>
+    </div>
+  </div>
 </div>
 {% endblock %}
